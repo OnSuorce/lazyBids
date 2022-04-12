@@ -1,7 +1,7 @@
 
 # User app
 
-This is where custom user's endpoints are defined
+This is where custom users are defined
 
 
 ```
