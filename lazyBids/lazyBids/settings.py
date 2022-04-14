@@ -49,9 +49,9 @@ INSTALLED_APPS = [
 
     #External libraries
     #allauth: https://django-allauth.readthedocs.io/en/latest/overview.html
-    'allauth', 
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth', 
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -147,7 +147,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    #'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 REST_FRAMEWORK = {
