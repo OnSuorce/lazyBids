@@ -2,7 +2,7 @@ env
 __pycache__
 *.cpython-39.pyc
 .vscode
-
+migrations/
 # Django #
 *.log
 *.pot

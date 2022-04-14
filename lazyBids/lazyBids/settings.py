@@ -141,6 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_ID = 1 #Required by allauth
 
+AUTH_USER_MODEL = 'users.CustomUser' #Specify to use 'CustomUser' class as user model form the users/models.py file
+
 AUTHENTICATION_BACKENDS = [
     
     # Needed to login by username in Django admin, regardless of `allauth`
