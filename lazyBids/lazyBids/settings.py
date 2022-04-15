@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     #Created apps
     'users', #Custom User models and APIs
     'bids',
+    'auctions',
 
     #External libraries
     'djoser'
