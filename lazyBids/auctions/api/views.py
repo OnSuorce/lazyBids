@@ -51,7 +51,8 @@ def get_authenticated_user(request):
         token = request.headers.get("Authorization").split()
         return token[1]
 
-        
+
+# TODO: implement pagination in auction list
 # TODO: implement validators in serializers
 # TODO: make only the owner to be able to update/remove his auctions
 # TODO: implement uuid
