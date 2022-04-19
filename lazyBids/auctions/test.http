@@ -1,3 +1,4 @@
 
 
-GET http://127.0.0.1:8000/api/v1/auction/test/ HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/auction/ HTTP/1.1
+Authorization: token b7f672d26b54ead0de20d7e3360ca44d57c5b214
