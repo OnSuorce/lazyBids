@@ -24,7 +24,7 @@ install the dependencies using the requirements.txt
 ```bash
 pip3 install -r requirements.txt
 ```
-Make migrations and create super user
+Make migrations and create super user (not mandatory but useful for testing and developing)
 ```bash
 cd lazyBids
 python3 manage.py makemigrations
