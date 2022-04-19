@@ -37,18 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites', 
-    
-    #rest-framework
+    'django.contrib.sites',
+
+    # rest-framework
     'rest_framework',
-    'rest_framework.authtoken', 
-    
-    #Created apps
-    'users', #Custom User models and APIs
+    'rest_framework.authtoken',
+
+    # Created apps
+    'users',  # Custom User models and APIs
     'bids',
     'auctions',
 
-    #External libraries
+    # External libraries
     'djoser'
 ]
 
@@ -135,14 +135,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#Added fields
+# Added fields
 
-SITE_ID = 1 
+SITE_ID = 1
 
-AUTH_USER_MODEL = 'users.CustomUser' #Specify to use 'CustomUser' class as user model form the users/models.py file
+# Specify to use 'CustomUser' class as user model form the users/models.py file
+AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
-    
+
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
 
@@ -152,14 +153,28 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 
-    'DEFAULT_AUTHENTICATION_CLASSES': ( 
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
 DJOSER = {
-    
+
     'SERIALIZERS': {
-         'user_create': 'users.serializers.UserRegistrationSerializer'
+        'user_create': 'users.serializers.UserRegistrationSerializer'
     }
-    
+
 }
+
+CURRENCIES = (
+    ('USD', 'U.S. Dollar'),
+    ('EUR', 'European Euro'),
+    ('JPY', 'Japanese Yen'),
+    ('GBP', 'British Pound'),
+    ('CHF', 'Swiss Franc'),
+    ('JPY', 'Japanese Yen'),
+    ('CAD', 'Canadian Dollar'),
+    ('AUD', 'Australian Dollar'),
+    ('ZAR', 'South African Dollar'),
+    ('CNY', 'Renminbi'),
+    ('RUB', 'Russian Ruble'),
+)
