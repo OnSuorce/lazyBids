@@ -1,16 +1,29 @@
 
 
-GET http://127.0.0.1:8000/api/v1/auction/ HTTP/1.1
-Authorization: token b7f672d26b54ead0de20d7e3360ca44d57c5b214
+GET http://127.0.0.1:8000/api/v1/auction/list/ HTTP/1.1
+Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
 ###
-POST http://127.0.0.1:8000/api/v1/auction/create HTTP/1.1
-Authorization: token b7f672d26b54ead0de20d7e3360ca44d57c5b214
+POST http://127.0.0.1:8000/api/v1/auction/ HTTP/1.1
+Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
 Content-Type: application/json
 
 {
-    "title": "WAT",
+    "title": "Computer",
     "description": "si",
-    "starting_bid": 1.00,
+    "starting_bid": 91.00,
     "image_url": "https://www.google.com/search?q=images&tbm=isch&source=iu&ictx=1&vet=1&fir=DH7p1w2o_fIU8M%252CBa_eiczVaD9-zM%252C_%253B2nDXavJs9DoKTM%252CB51x0PBR9KNzvM%252C_%253BsPwUW2x5Z3mupM%252CnBiD9BWYMB87aM%252",
     "currency": "USD"
 }
+###
+GET http://127.0.0.1:8000/api/v1/auction/70f9b665-8dd2-42d1-a319-383d6d0f04e3/ HTTP/1.1
+Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
+
+###
+
+DELETE http://127.0.0.1:8000/api/v1/auction/70f9b665-8dd2-42d1-a319-383d6d0f04e3/ HTTP/1.1
+Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
+
+###
+
+DELETE http://127.0.0.1:8000/api/v1/auction/7b420f81-fe17-499b-b9be-adb7bbb6fd9f/ HTTP/1.1
+Authorization: token ac0a00cd4f92d021a21d4740e6c7b58d12f05232

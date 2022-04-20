@@ -1,24 +1,26 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAuthorizedOrReadOnly
 from ..models import Auction
 from .serializers import AuctionDetailSerializer, AuctionCreateSerializer
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
 
+#https://www.django-rest-framework.org/api-guide/generic-views/#generic-views
 
 class AuctionView(APIView):
 
     def get(self, request):
 
         
-        return Response("Risposta")
+        return Response("Successfull")
 
 
 class AuctionListView(generics.ListAPIView):
     queryset = Auction.objects.all()
     serializer_class = AuctionDetailSerializer
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
@@ -31,20 +33,18 @@ class AuctionListView(generics.ListAPIView):
 class AuctionCreateView(generics.CreateAPIView):
         queryset = Auction.objects.all()
         serializer_class = AuctionCreateSerializer
-        permission_classes = []
+        permission_classes = [IsAuthenticated]
 
         def perform_create(self, serializer):
-
-               
-                
-                
+       
                 user = Token.objects.get(key=get_authenticated_user(self.request)).user
                 serializer.save(user=user)
 
-class AuctionRemoveView(generics.DestroyAPIView, generics.UpdateAPIView, generics.RetrieveAPIView):
+class AuctionDetailView(generics.DestroyAPIView, generics.UpdateAPIView, generics.RetrieveAPIView):
         queryset = Auction.objects.all()
         serializer_class = AuctionDetailSerializer
-        permission_classes = []
+        permission_classes = [IsAuthorizedOrReadOnly, IsAuthenticated]
+        lookup_field = "uuid"
 
 
 def get_authenticated_user(request):
@@ -55,7 +55,5 @@ def get_authenticated_user(request):
 # TODO: implement pagination in auction list
 # TODO: implement validators in serializers
 # TODO: make only the owner to be able to update/remove his auctions
-# TODO: implement uuid
+
 # TODO: add __str__ to bid model
-# TODO: add retrieve to AuctionRemoveView and rename it
-# TODO: add last_updated

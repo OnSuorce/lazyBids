@@ -3,6 +3,7 @@ from rest_framework import serializers
 from ..models import Auction
 from django.conf import settings
 from users.models import CustomUser
+
 class AuctionUserSerializer(serializers.ModelSerializer):
     #Custom serializer field to display a field of a relationship other than the pk
     #by default django in this cases will show the user's pk
@@ -19,10 +20,10 @@ class AuctionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Auction
         exclude = ['id']
-        read_only_fields = ['publish_date']
+        read_only_fields = ['publish_date','last_updated']
 
 class AuctionCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= Auction
-        exclude = ['id','publish_date', 'user']
+        exclude = ['id','publish_date', 'user', 'last_updated']
