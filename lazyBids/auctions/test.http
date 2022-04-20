@@ -4,15 +4,15 @@ GET http://127.0.0.1:8000/api/v1/auction/list/ HTTP/1.1
 Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
 ###
 POST http://127.0.0.1:8000/api/v1/auction/ HTTP/1.1
-Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
+Authorization: token 01a9bb25b2a81367c7eeb5b03d117981ff0d0e84
 Content-Type: application/json
 
 {
-    "title": "Computer",
+    "title": "GPU",
     "description": "si",
-    "starting_bid": 91.00,
+    "starting_bid": 391.00,
     "image_url": "https://www.google.com/search?q=images&tbm=isch&source=iu&ictx=1&vet=1&fir=DH7p1w2o_fIU8M%252CBa_eiczVaD9-zM%252C_%253B2nDXavJs9DoKTM%252CB51x0PBR9KNzvM%252C_%253BsPwUW2x5Z3mupM%252CnBiD9BWYMB87aM%252",
-    "currency": "USD"
+    "currency": "EUR"
 }
 ###
 GET http://127.0.0.1:8000/api/v1/auction/70f9b665-8dd2-42d1-a319-383d6d0f04e3/ HTTP/1.1

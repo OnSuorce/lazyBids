@@ -1,0 +1,8 @@
+POST http://127.0.0.1:8000/api/v1/bid/ HTTP/1.1
+Authorization: token 01a9bb25b2a81367c7eeb5b03d117981ff0d0e84
+Content-Type: application/json
+
+{
+    "amount":"1000",
+    "uuid": "f7cc3d89-deec-466d-9c67-a479803c090e"
+}

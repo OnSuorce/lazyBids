@@ -54,6 +54,4 @@ def get_authenticated_user(request):
 
 # TODO: implement pagination in auction list
 # TODO: implement validators in serializers
-# TODO: make only the owner to be able to update/remove his auctions
-
-# TODO: add __str__ to bid model
+# TODO: add view to return currencies
