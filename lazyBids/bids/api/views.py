@@ -46,3 +46,8 @@ class BidCreateView(generics.CreateAPIView):
 def get_authenticated_user(request):
         token = request.headers.get("Authorization").split()
         return token[1]
+
+
+# TODO: Add remove bid
+# TODO: validate if bidding amount is higher than last bid or starting bid
+# TODO: retrive list of bids based on the uuid parameter set in the body request
