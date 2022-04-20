@@ -2,6 +2,7 @@ env
 __pycache__
 *.cpython-39.pyc
 .vscode
+.idea
 migrations/
 # Django #
 *.log
