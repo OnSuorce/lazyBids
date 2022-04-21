@@ -1,6 +1,3 @@
-from ast import Return
-from email import message
-import uuid
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -11,6 +8,7 @@ from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
 from .permissions import IsAuthorizedOrReadOnly
 from django.core.exceptions import ObjectDoesNotExist
+from .pagination import BidsPagination
 
 
 class BidTestView(APIView):
@@ -24,6 +22,7 @@ class BidListView(generics.ListAPIView):
     queryset = Bid.objects.all()
     serializer_class = BidDetailSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = BidsPagination
 
     def list(self, request):
 
@@ -39,10 +38,11 @@ class BidListView(generics.ListAPIView):
         except ObjectDoesNotExist:
             return Response({'auction_uuid': 'No matching auction has been found with this uuid'},
                             status=status.HTTP_404_NOT_FOUND)
-        queryset = self.get_queryset().filter(auction=auction)
-        serializer = BidDetailSerializer(queryset, many=True)
 
-        return Response(serializer.data)
+        queryset = self.get_queryset().filter(auction=auction)
+        serializer = BidDetailSerializer(self.paginate_queryset(queryset), many=True)
+
+        return Response(self.get_paginated_response(serializer.data).data)
 
 
 class BidCreateView(generics.CreateAPIView):
@@ -67,8 +67,7 @@ class BidCreateView(generics.CreateAPIView):
             return Response({'auction_uuid': 'No matching auction has been found with this uuid'},
                             status=status.HTTP_404_NOT_FOUND)
 
-        bids = Bid.objects.filter(auction=auction).order_by("amount")
-
+        bids = Bid.objects.filter(auction=auction).order_by("-amount")
         if len(bids) > 0:
             highest_bid = bids[0]
             if request.data.get('amount') <= highest_bid.amount:
@@ -102,3 +101,6 @@ class BidDetailView(generics.DestroyAPIView, generics.RetrieveAPIView):
 def get_authenticated_user(request):
     token = request.headers.get("Authorization").split()
     return token[1]
+
+# TODO: make a bid wins (using put in detail view)
+# TODO: remove auction id

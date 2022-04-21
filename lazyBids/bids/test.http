@@ -7,8 +7,11 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "amount":1001,
+    "amount":1251113,
     "auction_uuid":"4f46145e-be1e-4aca-b7d1-6f308fe4bbd3"
 }
 
 ###
+
+GET http://127.0.0.1:8000/api/v1/bid/list/?auction_uuid=4f46145e-be1e-4aca-b7d1-6f308fe4bbd3 HTTP/1.1
+Authorization: {{token}}
