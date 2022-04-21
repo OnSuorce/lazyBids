@@ -20,4 +20,4 @@ Auction model is defined in [models.py](models.py)
 |last_updated   |`DateField()`   |   |Yes   | Automatically inserted date whenever the instance is persisted 
 |pk|`BigAutoField()`|Auto Generated|No|Inherited from models.Model field that is used as primary key
 
-The `__str__(self)` function can be overidden to customize the string output making it more readable whenever an Auction instance is printed or casted to string
+The `__str__(self)` function can be overrided to customize the string output making it more readable whenever an Auction instance is printed or casted to string
