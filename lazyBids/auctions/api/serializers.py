@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..models import Auction
-from django.conf import settings
+
 from users.models import CustomUser
 
 class AuctionUserSerializer(serializers.ModelSerializer):

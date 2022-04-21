@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from .pagination import AuctionsPagination
 from .permissions import IsAuthorizedOrReadOnly
 from ..models import Auction
 from .serializers import AuctionDetailSerializer, AuctionCreateSerializer
@@ -21,13 +22,14 @@ class AuctionListView(generics.ListAPIView):
     queryset = Auction.objects.all()
     serializer_class = AuctionDetailSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = AuctionsPagination
 
     def list(self, request):
         # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset()
-        serializer = AuctionDetailSerializer(queryset, many=True)
+        serializer = AuctionDetailSerializer(self.paginate_queryset(queryset), many=True)
         
-        return Response(serializer.data)
+        return Response(self.get_paginated_response(serializer.data).data)
 
 
 class AuctionCreateView(generics.CreateAPIView):

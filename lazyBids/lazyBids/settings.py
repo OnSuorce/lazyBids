@@ -175,6 +175,19 @@ DJOSER = {
 
 }
 
+#Added settings
+
+CUSTOM_PAGINATION = {
+    'bids' : {
+        'page_size' : 5,
+        'default_page' : 1
+    },
+    'auctions' :{
+        'page_size' : 8,
+        'default_page' : 1
+    }
+}
+
 CURRENCIES = (
     ('USD', 'U.S. Dollar'),
     ('EUR', 'European Euro'),
