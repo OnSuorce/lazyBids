@@ -65,6 +65,7 @@ class AuctionWinnerView(generics.RetrieveUpdateAPIView):
         
         queryset = Auction.objects.filter(is_open=True)
         serializer_class = AuctionWinnerSerializer
+        permission_classes = [IsAuthorizedOrReadOnly, IsAuthenticated]
         lookup_field = "uuid"
 
         def update(self, request, *args, **kwargs):
