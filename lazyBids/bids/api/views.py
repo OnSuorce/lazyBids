@@ -36,7 +36,7 @@ class BidListView(generics.ListAPIView):
         try:
             auction = Auction.objects.get(uuid=auction_uuid)
         except ObjectDoesNotExist:
-            return Response({'auction_uuid': 'No matching auction has been found with this uuid'},
+            return Response({'auction_uuid': 'No matching open auction has been found with this uuid'},
                             status=status.HTTP_404_NOT_FOUND)
 
         queryset = self.get_queryset().filter(auction=auction)
@@ -62,9 +62,9 @@ class BidCreateView(generics.CreateAPIView):
             return Response({'auction_uuid': 'required auction_uuid parameter is missing'},
                             status=status.HTTP_400_BAD_REQUEST)
         try:
-            auction = Auction.objects.get(uuid=auction_uuid)
+            auction = Auction.objects.get(uuid=auction_uuid, is_open=True)
         except ObjectDoesNotExist:
-            return Response({'auction_uuid': 'No matching auction has been found with this uuid'},
+            return Response({'auction_uuid': 'No matching auction has been found with this uuid or it is not open'},
                             status=status.HTTP_404_NOT_FOUND)
 
         bids = Bid.objects.filter(auction=auction).order_by("-amount")
@@ -101,6 +101,3 @@ class BidDetailView(generics.DestroyAPIView, generics.RetrieveAPIView):
 def get_authenticated_user(request):
     token = request.headers.get("Authorization").split()
     return token[1]
-
-# TODO: make a bid wins (using put in detail view)
-# TODO: remove auction id

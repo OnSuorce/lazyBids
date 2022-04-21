@@ -1,4 +1,7 @@
+from dataclasses import fields
 from rest_framework import serializers
+
+from auctions.models import Auction
 from ..models import Bid
 from users.models import CustomUser
 
@@ -12,9 +15,15 @@ class BidderSerializer(serializers.ModelSerializer):
         fields = ["email", "username"]
         read_only_fields = ["email", "username"]
 
+class AuctionUuidSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Auction
+        fields = ['uuid']
+
 class BidDetailSerializer(serializers.ModelSerializer):
     bidder = BidderSerializer()
-
+    auction = AuctionUuidSerializer()
     class Meta:
         model = Bid
         exclude = ['id']

@@ -5,6 +5,9 @@ urlpatterns = [
     path('test/',AuctionView.as_view()),
     path('list/', AuctionListView.as_view()),
     path('', AuctionCreateView.as_view()),
-    path('<uuid:uuid>/', AuctionDetailView.as_view())
+    path('<uuid:uuid>/', AuctionDetailView.as_view()),
+    path('currencies/', CurrenciesView.as_view()),
+    path('<uuid:uuid>/winner/', AuctionWinnerView.as_view())
+
 
 ]

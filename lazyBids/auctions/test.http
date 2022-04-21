@@ -13,9 +13,9 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "title": "Postcard",
+    "title": "Glass",
     "description": "A cool postcard",
-    "starting_bid": 19.00,
+    "starting_bid": 1.99,
     "image_url": "https://www.google.com/search?q=images&tbm=isch&source=iu&ictx=1&vet=1&fir=DH7p1w2o_fIU8M%252CBa_eiczVaD9-zM%252C_%253B2nDXavJs9DoKTM%252CB51x0PBR9KNzvM%252C_%253BsPwUW2x5Z3mupM%252CnBiD9BWYMB87aM%252",
     "currency": "USD"
 }
@@ -32,3 +32,17 @@ Authorization: {{token}}
 
 DELETE http://127.0.0.1:8000/api/v1/auction/7b420f81-fe17-499b-b9be-adb7bbb6fd9f/ HTTP/1.1
 Authorization: {{token}}
+
+###
+GET http://127.0.0.1:8000/api/v1/auction/currencies HTTP/1.1
+Authorization: {{token}}
+
+###
+
+PUT http://127.0.0.1:8000/api/v1/auction/4f46145e-be1e-4aca-b7d1-6f308fe4bbd3/winner/ HTTP/1.1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "bid_uuid": "3bf3a33b-aa15-4653-b640-4002c0da6f6b"
+}

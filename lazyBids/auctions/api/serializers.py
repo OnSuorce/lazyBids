@@ -1,5 +1,7 @@
+
 from rest_framework import serializers
 from ..models import Auction
+from django.db import models
 
 from users.models import CustomUser
 
@@ -26,3 +28,15 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model= Auction
         exclude = ['id','publish_date', 'user', 'last_updated']
+    
+    def validate_starting_bid(self, value):
+        if(value<1):
+            raise serializers.ValidationError("starting bid not valid, must be 1.00 or greater")
+        return value
+
+class AuctionWinnerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Auction
+        fields = ['is_open']
