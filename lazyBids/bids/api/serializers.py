@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ..models import Bid
-from django.conf import settings
 from users.models import CustomUser
 
 class BidderSerializer(serializers.ModelSerializer):

@@ -1,29 +1,34 @@
 
+#Replace token with a valid token
+@token= token 5a9c69d998f7e53b3d9c847459cb60ce06d9d9b2
 
+# @name AuctionList
 GET http://127.0.0.1:8000/api/v1/auction/list/ HTTP/1.1
-Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
+Authorization: {{token}}
 ###
+
+# @name AuctionCreation
 POST http://127.0.0.1:8000/api/v1/auction/ HTTP/1.1
-Authorization: token 01a9bb25b2a81367c7eeb5b03d117981ff0d0e84
+Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "title": "GPU",
-    "description": "si",
-    "starting_bid": 391.00,
+    "title": "Postcard",
+    "description": "A cool postcard",
+    "starting_bid": 19.00,
     "image_url": "https://www.google.com/search?q=images&tbm=isch&source=iu&ictx=1&vet=1&fir=DH7p1w2o_fIU8M%252CBa_eiczVaD9-zM%252C_%253B2nDXavJs9DoKTM%252CB51x0PBR9KNzvM%252C_%253BsPwUW2x5Z3mupM%252CnBiD9BWYMB87aM%252",
-    "currency": "EUR"
+    "currency": "USD"
 }
 ###
 GET http://127.0.0.1:8000/api/v1/auction/70f9b665-8dd2-42d1-a319-383d6d0f04e3/ HTTP/1.1
-Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
+Authorization: {{token}}
 
 ###
 
 DELETE http://127.0.0.1:8000/api/v1/auction/70f9b665-8dd2-42d1-a319-383d6d0f04e3/ HTTP/1.1
-Authorization: token b96a172d095a6663cf118869b922e7dfe6be7fea
+Authorization: {{token}}
 
 ###
 
 DELETE http://127.0.0.1:8000/api/v1/auction/7b420f81-fe17-499b-b9be-adb7bbb6fd9f/ HTTP/1.1
-Authorization: token ac0a00cd4f92d021a21d4740e6c7b58d12f05232
+Authorization: {{token}}

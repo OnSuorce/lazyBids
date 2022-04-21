@@ -1,3 +1,4 @@
+from ast import Return
 from email import message
 import uuid
 from rest_framework.views import APIView
@@ -9,13 +10,13 @@ from .serializers import *
 from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
 from .permissions import IsAuthorizedOrReadOnly
-from  django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
+
 
 class BidTestView(APIView):
 
     def get(self, request):
 
-        
         return Response("Successfull")
 
 
@@ -25,20 +26,22 @@ class BidListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
+
         auction_uuid = request.query_params.get('auction_uuid')
+
         if(auction_uuid is None):
-            message = {'auction_uuid':'auction_uuid parameter is mandatory'}
-            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response({'auction_uuid': 'auction_uuid parameter is mandatory'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         try:
             auction = Auction.objects.get(uuid=auction_uuid)
         except ObjectDoesNotExist:
-            return Response({'auction_uuid':'No matching auction has been found with this uuid'},
-             status=status.HTTP_404_NOT_FOUND)
+            return Response({'auction_uuid': 'No matching auction has been found with this uuid'},
+                            status=status.HTTP_404_NOT_FOUND)
         queryset = self.get_queryset().filter(auction=auction)
         serializer = BidDetailSerializer(queryset, many=True)
-        
+
         return Response(serializer.data)
 
 
@@ -48,23 +51,54 @@ class BidCreateView(generics.CreateAPIView):
     serializer_class = BidCreateSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
 
-        user = Token.objects.get(key=get_authenticated_user(self.request)).user
-        
-        auction = Auction.objects.get(uuid=self.request.data.get('auction_uuid'))
-        serializer.save(bidder=user,auction=auction)
+        serializer = self.get_serializer(data=request.data)
+
+        user = Token.objects.get(key=get_authenticated_user(request)).user
+        auction_uuid = request.data.get('auction_uuid')
+
+        if auction_uuid is None:
+            return Response({'auction_uuid': 'required auction_uuid parameter is missing'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        try:
+            auction = Auction.objects.get(uuid=auction_uuid)
+        except ObjectDoesNotExist:
+            return Response({'auction_uuid': 'No matching auction has been found with this uuid'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        bids = Bid.objects.filter(auction=auction).order_by("amount")
+
+        if len(bids) > 0:
+            highest_bid = bids[0]
+            if request.data.get('amount') <= highest_bid.amount:
+                return Response({'amount': f'amount has to be greater than the leading bid of: {highest_bid.amount}'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        elif auction.starting_bid > request.data.get('amount'):
+            return Response({'amount': f'amount has to be greater or equal than the starting bid'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer, user, auction)
+
+        return Response({
+            'amount': request.data.get('amount'),
+            'auction_uuid': auction_uuid},
+            status=status.HTTP_201_CREATED)
+
+    def perform_create(self, serializer, user, auction):
+
+        serializer.save(bidder=user, auction=auction)
+
 
 class BidDetailView(generics.DestroyAPIView, generics.RetrieveAPIView):
-        queryset = Bid.objects.all()
-        serializer_class = BidDetailSerializer
-        permission_classes = [IsAuthorizedOrReadOnly, IsAuthenticated ]
-        lookup_field = "uuid"
+    queryset = Bid.objects.all()
+    serializer_class = BidDetailSerializer
+    permission_classes = [IsAuthorizedOrReadOnly, IsAuthenticated]
+    lookup_field = "uuid"
 
 
 def get_authenticated_user(request):
-        token = request.headers.get("Authorization").split()
-        return token[1]
-
-
-# TODO: validate if bidding amount is higher than last bid or starting bid
+    token = request.headers.get("Authorization").split()
+    return token[1]
