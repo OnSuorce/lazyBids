@@ -1,6 +1,6 @@
 
 #Replace token with a valid token
-@token= token 5a9c69d998f7e53b3d9c847459cb60ce06d9d9b2
+@token= token 12b6681d8f431b8ec492a097951bc7e063bb4734
 
 # @name AuctionList
 GET http://127.0.0.1:8000/api/v1/auction/list/ HTTP/1.1
@@ -20,7 +20,7 @@ Content-Type: application/json
     "currency": "USD"
 }
 ###
-GET http://127.0.0.1:8000/api/v1/auction/70f9b665-8dd2-42d1-a319-383d6d0f04e3/ HTTP/1.1
+GET http://127.0.0.1:8000/api/v1/auction/2ce0bd2f-d634-496a-846e-9577c72efff1/ HTTP/1.1
 Authorization: {{token}}
 
 ###

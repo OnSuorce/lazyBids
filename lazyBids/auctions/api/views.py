@@ -96,6 +96,3 @@ class AuctionWinnerView(generics.RetrieveUpdateAPIView):
 def get_authenticated_user(request):
         token = request.headers.get("Authorization").split()
         return token[1]
-
-
-# TODO: implement validators in serializers
