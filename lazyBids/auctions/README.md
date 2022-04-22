@@ -1,10 +1,11 @@
-#Auction app
+
+# Auction
 
 This is the folder that django creates whenever an app is created with the manage.py script.
 There isn't much to do other than defining the models and tests used by the app.
 Views, Serializers, Permissions, Urls are defined in the sub folder [api](api/README.md)
 
-#Auction model
+# Auction model
 Auction model is defined in [models.py](models.py)
 |Field   | Type  | Default  | Editable|Description  |
 |---|---|---|---|---|
