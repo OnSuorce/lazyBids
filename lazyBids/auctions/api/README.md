@@ -122,6 +122,7 @@ class AuctionUserSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = CustomUser
+        fields = ["email", "username"]
         read_only_fields = ["email", "username"]
 
 class AuctionDetailSerializer(serializers.ModelSerializer):
