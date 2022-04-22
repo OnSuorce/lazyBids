@@ -96,8 +96,33 @@ The `serializers_class` uses a specific serializer as the class name suggests.
 There are 2 permissions classes: the django's class and `IsAuthorizedOrReadOnly` class which is the one i wrote to make sure only the owner of the auction can access unsafe http methods (POST, DELETE, PUT...).
  The `lookup_field` is assigned to 'uuid' which means that the auction instance should be retrieved using the uuid provided, by default django would use the primary key which in this case would be the 'pk' field.
 
-Another note worthy detail is the fact that both `perform_update()` and `update()` have been overrided. These methods work together to make sure that the requested instance of an auction gets updated with the new values. A detailed explanation is available in the bid's api folder.
+Another note worthy detail is the fact that both `perform_update()` and `update()` have been overrided. These methods work together to make sure that the requested instance of an auction gets updated with the new values. The `update()` gets invoked when the server receives the request and it is expected to return a response. The `perform_update()` it's within `update()` and it's the method that actually persists the object on the database.
 
+Indeed this how the default implementation looks like:
+```python
+class UpdateModelMixin:
+    """
+    Update a model instance.
+    """
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+```
+So in my case i decided to validate the incoming data in the `update()` method so i could decide how to return a response in case of invalid data
 # Serializers
 
 Serializers are classes that manage how models are serialized in Python datatypes or deserialized in JSON. They are very useful as, combined with generics views, they make serialization easy to implement and use.
@@ -135,7 +160,7 @@ class AuctionDetailSerializer(serializers.ModelSerializer):
 ```
 
 To serialize the user field (which is a foreign key related to the user's model) it's being used another serializator. This allows to fully control how the serialization for a single field should work instead of using the default one.
-This is what the json output would like of the default and the shown one:
+This is what the json output would like of the default versus the shown one:
 ```json
 //Default
 {
