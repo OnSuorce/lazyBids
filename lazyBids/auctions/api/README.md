@@ -96,7 +96,7 @@ The `serializers_class` uses a specific serializer as the class name suggests.
 There are 2 permissions classes: the django's class and `IsAuthorizedOrReadOnly` class which is the one i wrote to make sure only the owner of the auction can access unsafe http methods (POST, DELETE, PUT...).
  The `lookup_field` is assigned to 'uuid' which means that the auction instance should be retrieved using the uuid provided, by default django would use the primary key which in this case would be the 'pk' field.
 
-Another note worthy detail is the fact that both `perform_update()` and `update()` have been overrided. These methods work together to make sure that the requested instance of an auction gets updated with the new values. The `update()` gets invoked when the server receives the request and it is expected to return a response. The `perform_update()` it's within `update()` and it's the method that actually persists the object on the database.
+Another note worthy detail is the fact that both `perform_update()` and `update()` have been overrided. These methods work together to make sure that the requested instance of an auction gets updated with the new values. The `update()` gets invoked when the server receives the request and it is expected to return a response. The `perform_update()` it's called within `update()` and it's the method that actually persists the object on the database.
 
 Indeed this how the default implementation looks like:
 ```python
@@ -187,3 +187,4 @@ This is what the json output would like of the default versus the shown one:
   ...
 }
 ```
+
